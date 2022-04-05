@@ -18,7 +18,7 @@ class test:
         print(self.whitelist)
     def generator(self) :
         randlist=[]
-        for i in range(1,48):
+        for i in range(1,45):
             randlist.append(i)
         for num in self.whitelist:
             randlist.remove(num)

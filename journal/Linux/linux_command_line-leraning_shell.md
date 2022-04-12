@@ -1,7 +1,7 @@
-# Description
+# 0. Description
 The Linux Command Line - FIfth internet edition 책 시작  
 from 25p
-# What is shell
+# 1. What is shell
 ## command history
 linux terminal은 1000개 정도의 command history를 기억할 수 있다. updown key나 history 커맨드로 확인 가능
 ## simple command
@@ -46,7 +46,7 @@ Mem:       16294780     5841400      303216      295020    10150164     9820524
 ## virtual terminal 접속
 Ctrl-Alt-F1 에서 Ctrl-Alt-F6
 Ctrl-Alt-F7 => Graphical Desktop
-# Navigate
+# 2. Navigate
 Linux Filesystem은 hierarchical directory structure.
 Tree like 형식으로 구현됨.
 
@@ -80,7 +80,7 @@ cd ~user_name
 3. linux는 file 확장자의 개념이 없다. application program은 파일 확장자에 따라 파일 구분 가능
 4. 파일 이름에 embedded spaces and punctuation characters, limit the punctuation characters in the names of files you create to period, dash, and underscore가 사용 가능하지만 spcace는 비추한다.
 
-# Explorer
+# 3. Explorer
 ls 
 -> list directory contents
 file 
@@ -238,7 +238,7 @@ file을 다양한 이름으로 참조할 수 있도록 링크 생성
 ## hard link
 hard link 또한 다양한 이름으로 파일을 참조할 수 있도록 함.
 
-# Manipulating Files
+# 4. Manipulating Files
 cp -> copy files and directory
 mv -> move files and directory
 mkdir -> make directory
@@ -324,7 +324,7 @@ symbolic link를 지우면 link만 지워질 뿐 파일은 그대로 있다.
  hardlink를 만들면 같은 data part를 공유하는 추가적인 name part가 생성됨. 따라서 hard link는 파일의 특정 부분을 참조함.
  ### broken link
  link의 목적 파일이 삭제되거나 사라지면 broken link가 됨.
-# working with commands
+# 5. working with commands
 `type` -> command name이 출력되는 방법
 `which` -> 실행 가능한 프로그램의 위치
 `help` -> help 페이지
@@ -437,7 +437,7 @@ jih88@jih88 ~/proj/mediatek/ntv4ov6 $ type foo
 bash: type: foo: 발견되지 않음
 ```
 alias는 shell session이 닫히면 사라진다.
-# Redirection
+# 6. Redirection
 I/O Redirection
 I/O => Input/Output, command의 output을 file이나 다른 command의 input으로 redirect 가능
 `cat` => concatenate files
@@ -494,3 +494,491 @@ raad one or more files and copy them to standard output
 ``` bash
 cat [file ...]
 ```
+paging 없이 file 출력 가능.
+ex)
+``` bash
+cat movie.mpeg.0* > movie.mpeg
+```
+- filename argument 없이 cat을 사용하면, standard input을 copy하여 standard output으로 copy하는 동작을 한다.
+- redirection을 이용해 standard input을 다른 파일로 copy하는 동작도 가능하다.
+``` bash
+cat > lazydog.txt
+```
+- 반대로 file에서 standard output으로 출력하는 방법도 가능하다.
+``` bash
+cat < lazydog.txt
+```
+## pipeline
+standard input에서 data를 읽어 standard output으로 data 전송
+command의 statndard output을 다른 command의 standard input으로 활용 가능하다
+ex)
+``` bash
+ls -l /usr/bin | less
+```
+`>`와 `|`의 다른점
+`>`은 command에 standard input을 입력할 수 없으나, `|`는 가능하다.
+``` bash
+ls > less
+```
+위와 같이 사용하면 ls의 결과물이 less 명령어 파일에 입력됨으로서 less 명령어가 파괴된다.
+redirection 사용에는 주의가 필요하다.
+### Filters
+pipeline은 sort와 같은 명령어를 이용하여 주로 필터 용도로 사용됨.
+ex)
+``` bash
+ls /bin /usr/bin | sort | less
+```
+### uniq
+duplicate된 line을 제거
+``` bash
+ls /bin /usr/bin | sort | uniq | less
+```
+dupicated된 line만 출력
+``` bash
+ls /bin /usr/bin | sort | uniq -d | less
+```
+### wc
+line의 개수, 단어의 개수, file의 총 byte수 등을 출력
+``` bash
+jih88@jih88 ~ $ wc ls-output.txt
+  2986  28049 204019 ls-output.txt
+```
+겹치지 않는 item의 개수 출력
+``` bash
+ls /bin /usr/bin | sort | uniq | wc -l
+```
+### grep
+text 패턴을 찾아내는 프로그램
+``` bash
+grep pattern [file ...]
+```
+ex)
+``` bash
+jih88@jih88 ~ $ ls /bin /usr/bin | sort | uniq | grep zip
+bunzip2
+bzip2
+bzip2recover
+funzip
+gpg-zip
+gunzip
+gzip
+mzip
+p7zip
+preunzip
+prezip
+prezip-bin
+unzip
+unzipsfx
+zip
+zipcloak
+zipdetails
+zipgrep
+zipinfo
+zipnote
+zipsplit
+```
+`-i` -> ignore case
+`-v` -> line과 match되지 않는 패턴 출력
+## head/tail
+head -> first line of file 출력
+tail -> last line of file 출력
+``` bash
+jih88@jih88 ~ $ head -n 5 ls-output.txt 
+합계 1094764
+-rwxr-xr-x 1 root root            96  3월 18 22:21 2to3-2.7
+-rwxr-xr-x 1 root root            96  1월 27  2021 2to3-3.5
+-rwxr-xr-x 1 root root         10104  4월 23  2016 411toppm
+-rwxr-xr-x 1 root root            40  2월  6  2018 7zr
+jih88@jih88 ~ $ tail -n 5 ls-output.txt 
+-rwxr-xr-x 2 root root        178312 11월 27  2020 zipinfo
+-rwxr-xr-x 1 root root         89488  4월 22  2017 zipnote
+-rwxr-xr-x 1 root root         93584  4월 22  2017 zipsplit
+-rwxr-xr-x 1 root root         26624  2월 26  2018 zjsdecode
+-rwxr-xr-x 1 root root         10336  7월 28  2021 zlib-flate
+```
+명령어와의 조합
+``` bash
+jih88@jih88 ~ $ ls /usr/bin/ | tail -n 5
+zipinfo
+zipnote
+zipsplit
+zjsdecode
+zlib-flate
+```
+변경되는 파일을 실시간으로 출력
+``` bash
+tail -f /var/log/syslog
+```
+## tee
+standard input으로부터 data를 읽어들임과 동시에 standard output과 파일로 동시에 출력
+ex)
+``` bash
+jih88@jih88 ~ $ ls /usr/bin | tee ls.txt | grep zip
+funzip
+gpg-zip
+mzip
+p7zip
+preunzip
+prezip
+prezip-bin
+unzip
+unzipsfx
+zip
+zipcloak
+zipdetails
+zipgrep
+zipinfo
+zipnote
+zipsplit
+```
+# 7. echo
+echo - text argument를 standard output으로 출력
+``` bash
+jih88@jih88 ~ $ echo this is a test
+this is a test
+```
+``` bash
+jih88@jih88 ~ $ echo *
+11.4 ML bin configs docker ent gww2 ipv6_setting.sh lazy_dog.txt log ls-output.txt ls.txt mail mtk mtk_main my_module proj ssh svn_backup tftproot tr181 uci_setting uci_setting.sh utils 다운로드 문서 바탕화면 비디오 사진 음악
+```
+## Expansion
+### pathname expansion
+wildcard의 동작 매커니즘을 pathname expansion이라고 정의할 수 있다.
+``` bash
+jih88@jih88 ~ $ echo ipv*
+ipv6_setting.sh
+jih88@jih88 ~ $ echo *s
+configs utils
+jih88@jih88 ~ $ echo [[:upper:]]*
+ML
+jih88@jih88 ~ $ echo /usr/*/share
+/usr/local/share
+```
+ls의 옵션들은 내부적으로 echo로 구현되어 있다.
+``` bash
+echo .[!.]*
+ls -A
+```
+### Tilde Expansion
+tilde character (~)는 home directory를 의미함
+``` bash
+echo ~
+echo ~jih88
+```
+### Arithmetic Expansion
+`$((expression))` 과 같은 형식으로 사용
+``` bash
+jih88@jih88 ~ $ echo $((2+2))
+4
+jih88@jih88 ~ $ echo $((3-2))
+1
+jih88@jih88 ~ $ echo $((3*3))
+9
+jih88@jih88 ~ $ echo $((4/2))
+2
+jih88@jih88 ~ $ echo $((3%2))
+1
+jih88@jih88 ~ $ echo $((4**2))
+16
+```
+``` bash
+jih88@jih88 ~ $ echo $(($((5**2))*3))
+75
+```
+문자와 조합한 표현
+``` bash
+jih88@jih88 ~ $ echo Five divide by two equals $((5/2))
+Five divide by two equals 2
+jih88@jih88 ~ $ echo with $((5%2)) left over.
+with 1 left over.
+```
+### Brace Expansion
+pattern을 포함한 brace를 이용한 multiple text string 생성 가능
+``` bash
+jih88@jih88 ~ $ echo Front-{A,B,C}-Back
+Front-A-Back Front-B-Back Front-C-Back
+jih88@jih88 ~ $ echo Number_{1..5}
+Number_1 Number_2 Number_3 Number_4 Number_5
+jih88@jih88 ~ $ echo {01..15}
+01 02 03 04 05 06 07 08 09 10 11 12 13 14 15
+jih88@jih88 ~ $ echo {001..15}
+001 002 003 004 005 006 007 008 009 010 011 012 013 014 015
+jih88@jih88 ~ $ echo {Z..A}
+Z Y X W V U T S R Q P O N M L K J I H G F E D C B A
+jih88@jih88 ~ $ echo a{A{1,2},B{3,4}}b
+aA1b aA2b aB3b aB4b
+```
+아래와 같이 활용 가능
+``` bash
+jih88@jih88 ~/photos $ mkdir {2007..2009}-{01..12}
+jih88@jih88 ~/photos $ ls
+2007-01  2007-03  2007-05  2007-07  2007-09  2007-11  2008-01  2008-03  2008-05  2008-07  2008-09  2008-11  2009-01  2009-03  2009-05  2009-07  2009-09  2009-11
+2007-02  2007-04  2007-06  2007-08  2007-10  2007-12  2008-02  2008-04  2008-06  2008-08  2008-10  2008-12  2009-02  2009-04  2009-06  2009-08  2009-10  2009-12
+```
+### Parameter Expansion
+shell에 변수를 지정하여 저장할 수 있다.
+shell script에서 유용하게 활용된다.
+``` bash
+jih88@jih88 ~ $ echo $USER
+jih88
+jih88@jih88 ~ $ echo $SUSER
+```
+### Command Substitution
+command의 output을 expansion으로 사용 가능
+``` bash
+jih88@jih88 ~ $ echo $(ls)
+11.4 ML bin configs docker ent gww2 ipv6_setting.sh lazy_dog.txt log ls-output.txt ls.txt mail mtk mtk_main my_module proj ssh svn_backup tftproot tr181 uci_setting uci_setting.sh utils 다운로드 문서 바탕화면 비디오 사진 음악
+jih88@jih88 ~ $ ls -l $(which cp)
+-rwxr-xr-x 1 root root 141528  1월 18  2018 /bin/cp
+```
+older system에서는 backquote를 사용했고 지금도 사용 가능
+``` bash
+jih88@jih88 ~ $ ls -l `which cp`
+-rwxr-xr-x 1 root root 141528  1월 18  2018 /bin/cp
+```
+## Quoting
+expansion으로 오인하여 일반 strng이 잘못 출력되는 이슈 발생
+``` bash
+jih88@jih88 ~ $ echo this is a            test
+this is a test
+jih88@jih88 ~ $ echo The total is $100.00
+The total is 00.00
+```
+quoting으로 일반 string을 정상 출력 가능
+### Double Quotes
+- $, \(backslash), `(backquotes)를 제외하면 double quates 안에 들어가면 일반 string으로 인식됨.
+- word-splitting, pathname expansion, tilde expansion, brace exapansion은 무시되고, parameter expansion, arithmetic expansion, command substitution은 여전히 동작함.
+``` bash
+jih88@jih88 ~ $ touch "two words.txt"
+jih88@jih88 ~ $ ls -l two words.txt
+ls: 'two'에 접근할 수 없습니다: 그런 파일이나 디렉터리가 없습니다
+ls: 'words.txt'에 접근할 수 없습니다: 그런 파일이나 디렉터리가 없습니다
+jih88@jih88 ~ $ ls -l "two words.txt"
+-rw-rw-r-- 1 jih88 jih88 0  4월 12 12:24 'two words.txt'
+```
+``` bash
+jih88@jih88 ~ $ echo "$USER $((2+2)) $(cal)"
+jih88 4       4월 2022         
+일 월 화 수 목 금 토  
+                1  2  
+ 3  4  5  6  7  8  9  
+10 11 12 13 14 15 16  
+17 18 19 20 21 22 23  
+24 25 26 27 28 29 30 
+```
+``` bash
+jih88@jih88 ~ $ echo this is a             test
+this is a test
+jih88@jih88 ~ $ echo "this is a           test"
+this is a           test
+```
+word-splitting mechanism에서는 neline이 delimitter로 고려되지 않는다.
+double quote를 적용하면 delimiter로 적용된다.
+``` bash
+jih88@jih88 ~ $ echo $(cal)
+4월 2022 일 월 화 수 목 금 토 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
+jih88@jih88 ~ $ echo "$(cal)"
+      4월 2022         
+일 월 화 수 목 금 토  
+                1  2  
+ 3  4  5  6  7  8  9  
+10 11 12 13 14 15 16  
+17 18 19 20 21 22 23  
+24 25 26 27 28 29 30  
+```
+### Single Quotes
+single quotes는 expansion을 허용하지 않는다.
+``` bash
+jih88@jih88 ~ $ echo text ~/*.txt {a,b} $(echo foo) $((2+2)) $USER 
+text /home/jih88/lazy_dog.txt /home/jih88/ls-output.txt /home/jih88/ls.txt /home/jih88/two words.txt a b foo 4 jih88
+jih88@jih88 ~ $ echo "text ~/*.txt {a,b} $(echo foo) $((2+2)) $USER"
+text ~/*.txt {a,b} foo 4 jih88
+jih88@jih88 ~ $ echo 'text ~/*.txt {a,b} $(echo foo) $((2+2)) $USER'
+text ~/*.txt {a,b} $(echo foo) $((2+2)) $USER
+```
+### Escaping Characters
+single character만 quoting하고 싶을 때 사용
+``` bash
+jih88@jih88 ~ $ echo "The balance for user $USER is: \$5.00"
+The balance for user jih88 is: $5.00
+```
+### Backslash Escape Sequences
+\(backslash)를 사용하여 control code를 사용할 수 있다.
+`\a` => 비프음
+`\b` => backspace
+`\n` => newline
+`\r` => carrage return
+`\t` => tab
+echo에는 \n이 추가되며, 이가 제거된 echo를 출력하려면
+`echo -e`와 같이 `-e`를 추가하여 제거 가능
+# 8. Advanced Keyboard Command
+## Command Line Editing
+### Cursor Movement
+Ctrl+A => 라인 맨 앞으로 이동
+Ctrl+E => 라인 맨 뒤로 이동
+Ctrl+F => 한글자씩 앞으로 이동
+Ctrl+B => 한글자씩 뒤로 이동
+Alt+F => 한단어씩 앞으로 이동
+Alt+B => 한단어씩 뒤로 이동
+Ctrl+l => screen을 clear함. clear 커맨드와 유사
+### Modifying Text
+Ctrl+D => 커서 위치에 있는 글자 제거된
+Ctrl+T => 커서 위치에 있는 글자와 그 앞의 글자 치환
+Alt+T => 커서 위치에 있는 단어와 그 앞의 단어 치환
+Alt+l => 커서 위치부터 단어 끝까지의 알파벳을 lower case로 변경
+Alt+u => 커서 위치부터 단어 끝까지의 알파벳을 upper case로 변경
+### Cutting and Pasting(Killing and Yanking)
+Ctrl+k => 커서부터 라인 끝까지 delete
+Ctrl+u => 커서부터 라인 시작까지 delete
+Alt+d => 커서부터 현재 단어 끝까지 delete
+Alt+backspace => 커서부터 현재 단어 시작점까지 delete
+Ctrl+y => delete한 text 붙여넣기
+## Completion
+한글자만 입력한 상태에서 tab하면 자동으로 채워준다.
+### completion 관련 command
+Alt+? => 가능한 커맨드 디스플레이
+Alt+* => 가능한 커맨드 입력
+## Using History
+home directory의 .bash_history에 명령어 내역을 저장함.
+`history` => 명령어 호출 내역 확인하는 명령어
+`!번호` => 해당 커맨드 index에 해당하는 명령어 실행
+``` bash
+jih88@jih88 ~ $ history | tail
+ 2115  ls /bin /usr/bin | sort | uniq | grep -v zip
+ 2116  history
+ 2117  history | tail
+ 2118  ls /bin /usr/bin | sort | uniq | grep -v zip
+ 2119  history
+ 2120  ls -al | grep zip
+ 2121  ls
+ 2122  ls -al | grep ent
+ 2123  history
+ 2124  history | tail
+jih88@jih88 ~ $ !2122
+ls -al | grep ent
+lrwxrwxrwx  1 jih88 jih88     47  8월 30  2021 11.4 -> /home/jih88/proj/SDK_11.4/QCA_SDK_11.4.CSU1_ent
+lrwxrwxrwx  1 jih88 jih88     54  8월 10  2021 ML -> /home/jih88/proj/SDK_11.4/QCA_SDK_11.4.CSU1_ent_ML_CFR
+lrwxrwxrwx  1 jih88 jih88     55  7월 22  2021 ent -> /home/jih88/proj/SDK_11.0/ENT/QCA_SDK_11.2_CS_ent_merge
+lrwxrwxrwx  1 jih88 jih88     62  7월 22  2021 tr181 -> /home/jih88/proj/SDK_11.0/ENT/QCA_SDK_11.2_CS_ent_merge_kt_edu
+```
+`Ctrl+r` => history search
+history search하는 도중에 선택한 커맨드를 `Enter` 혹은 `Ctrl+j` 시에 커맨드 입력
+history search하는 도중에 선택한 커맨드를 `Ctrl+g` 혹은 `Ctrl+c` 시에 커맨드 입력취소
+### history command
+`Ctrl+p` => previous(이전 히스토리로 이동)
+`Ctrl+n` => next
+`Alt+<` => beginning of history로 이동
+`Alt+>` => end of history로 이동
+`Ctrl+r`=> reverse incremental search
+`Alt+p` => reverse search
+`Alt+n` => Forward search
+`Ctrl+o` => 현재 history item을 실행하고 다음 item으로 이동
+### history expansion
+`!!` => repeat last command
+`!string` => history 중에 string으로 시작하는 command를 실행
+`!?string` => history 중에 string을 포함하는 command 실행
+### script
+script [file]
+shell에 출력된 모든 로그를 file에 저장
+# 9. Permission
+Unix, Linux는 Multitasking, Multi-user system
+`id` -> display user identify
+`chmod` -> change file's mode
+`umask` -> set default file permission
+`su` -> run a shell as super user
+`sudo` -> execute a command as anoter user
+`chown` -> change file's owner
+`chgrp` -> change file's group
+`passwd` -> change a user's password
+## owners, group members, and others
+regular user는 system file을 읽을 권한이 없다.
+id 커맨드를 통해 user의 identify 정보 확인 가능
+``` bash
+jih88@jih88 ~/proj/mediatek/ntv4ov6 $ id
+uid=1000(jih88) gid=1000(jih88) 그룹들=1000(jih88),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),113(lpadmin),130(sambashare)
+```
+user account 정보 파일 -> `/etc/passwd`  
+group account 정보 파일 -> `/etc/group`  
+user/group password 정보 파일 -> `/etc/shadow`  
+superuser는 uid(0)
+## Reading, Writing, Executing
+### File Type
+`-` -> 일반 파일
+`d` -> 디렉터리
+`l` -> 심볼릭 링크
+`c` -> character special file. device that handles data as a stream
+`b` -> block special file. device that handles data in blocks
+### permission attribute
+`r` -> read and open
+`w` -> write and append, and delete
+`x` -> treat as a program, execute
+### chmod
+permision 변경 가능
+``` bash
+chmod 600 foo.txt
+```
+### chmod symbolic notation
+`u` -> user
+`g` -> group
+`o` -> others
+`a` -> all
+### umask
+파일을 생성하면 permission이 644로 표기됨.
+``` bash
+jih88@jih88 ~ $ ls -al foo.txt 
+-rw-rw-r-- 1 jih88 jih88 5  4월 12 15:53 foo.txt
+jih88@jih88 ~ $ umask
+0002
+```
+original file mode가 666
+umask가 002
+mask 적용하면 644
+`umask [permision]` 명령어로 umask 변경 가능.
+### special permission
+- setuid bit(octal 4000)
+root 사용자의 파일을 일반 사용자가 접근 가능.
+- setgid bit(octal 2000)
+setuid group 버전
+- sticky bit(octal 1000)
+sticky bit가 설정되면 디렉터리 소유자나 파일 소유자, 슈퍼 유저가 아닌 사용자들은 파일 삭제, 이름 변경 불가능
+## change identities
+권한 획득 방법
+1. 권한 있는 사용자로 login
+2. su 커맨드 사용
+3. sudo 커맨드 사용
+### su
+임시 유저나 임시 그룹으로 shell 사용  
+superuser로 shell 실행
+``` bash
+su -
+```
+superuser로 command 실행
+``` bash
+su -c 'command'
+```
+### sudo
+다른 유저의 권한으로 command 실행
+sudo로 어떤 권한이 보장되는지 아래 커맨드로 확인 가능
+``` bash
+sudo -l
+```
+### chown
+파일의 소유자와 그룹을 변경
+``` bash
+chown bob:users test.sh
+```
+### chgrp
+파일의 그룹 소유자를 변경. chown과 유사
+## changing password
+`passwd` 명령어를 이용하여 user의 password 변경 가능
+### futher reading
+adduser, useradd, groupadd로 user 및 group 생성 가능. 
+# 10. Processes
+`ps`
+`top`
+`jobs`
+`bg`
+`fg`
+`kill`
+`killall`
+`shutdown`

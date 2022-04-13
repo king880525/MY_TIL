@@ -974,11 +974,244 @@ chown bob:users test.sh
 ### futher reading
 adduser, useradd, groupadd로 user 및 group 생성 가능. 
 # 10. Processes
-`ps`
-`top`
-`jobs`
-`bg`
-`fg`
-`kill`
-`killall`
-`shutdown`
+`ps` -> 현재 process에 대한 snapshot 출력
+`top` -> task를 출력
+`jobs` -> 활성화된 job 표시
+`bg` -> job을 background로 위치
+`fg` -> job을 foreground로 위치
+`kill` -> process에 signal 전송
+`killall` -> 이름으로 process kill
+`shutdown` -> system을 shutdown하거나 reboot
+## process 동작 방식
+kernel init 단계에서 init process 실행  
+/etc에 있는 script를 init process에서 실행 
+/etc에 있는 script는 daemon program(background에서 동작, user interface 없음.)
+program이 다른 program을 실행할 때, 실행하는 process를 parent process, 실행되는 process를 child process라고 함.
+process ID(PID) - 각 process에 부여되는 ID
+process마다 memory가 assign되어 있고, owner가 있고, user id가 있음.
+## Viewing Processes
+ps 명령어는 current terminal session과 연관된 process만 표시  
+추가적인 정보를 위해서는 option 추가 필요
+``` bash
+jih88@jih88 ~ $ ps
+  PID TTY          TIME CMD
+24904 pts/0    00:00:00 bash
+24946 pts/0    00:00:00 ps
+```
+TTY -> short for "teletype", controlling terminal for the process
+TIME -> ammount of CPU time consumed by the process
+x 옵션 => 어떤 프로세스가 어떤 터미널에 의해 control되는지 모든 리스트 출력. 우리가 소유한 process만 출력.
+``` bash
+jih88@jih88 ~ $ ps x
+  PID TTY      STAT   TIME COMMAND
+  405 pts/4    Ss+    0:02 bash
+ 3868 ?        Sl     7:19 gksudo remmina
+ 3873 ?        Ss     0:00 /lib/systemd/systemd --user
+...
+```
+STAT -> short for "state", process의 현재 상태 출력
+#### process state
+`R` -> Running, running or ready to run
+`S` -> Sleeping, waiting for a event
+`D` -> Uninterruptible sleep, wait for I/O
+`T` -> Stopped
+`Z` -> Zombie process, not cleaned child process
+`<` -> high-priority process, 좀 더 많은 CPU 타임을 할애받음.
+`N` -> low-priority process, 모든 higher priority process가 끝나야 CPU 타임을 할애받음.
+
+ps aux -> 자주 사용되는 option
+``` bash
+jih88@jih88 ~ $ ps aux
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.0 226432  7124 ?        Ss    3월21   0:39 /sbin/init splash
+root         2  0.0  0.0      0     0 ?        S     3월21   0:00 [kthreadd]
+root         4  0.0  0.0      0     0 ?        I<    3월21   0:00 [kworker/0:0H]
+```
+#### BSD Stype PS Column Header
+`USER` -> User ID
+`%CPU` -> CPU Usage in Percent
+`%MEM` -> Memory Usage in Percent
+`VSZ` -> Virtual Memory Size
+`RSS` -> Resident Set Size. process가 사용하고 있는 Physical memory(RAM)
+`START` -> Process가 시작된 시간. 24시간이 넘어가면 date가 사용됨.
+
+### Viewing process dynamically with top
+top 명령어는 machine's activity를 dynamic하게 출력  
+top program은 every three seconds마다 지속적으로 update  
+top 프로그램은 두 가지 part로 구성. system summary, process table list  
+``` bash
+jih88@jih88 ~ $ top
+
+top - 09:39:19 up 23 days, 39 min,  1 user,  load average: 0.30, 0.48, 0.61
+Tasks: 309 total,   1 running, 252 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  5.2 us,  1.1 sy,  0.0 ni, 93.2 id,  0.4 wa,  0.0 hi,  0.1 si,  0.0 st
+KiB Mem : 16294780 total,  2057976 free,  5171524 used,  9065280 buff/cache
+KiB Swap: 31249404 total, 30237436 free,  1011968 used. 10517372 avail Mem 
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                                                                                                                                                   
+ 1839 root      20   0 1126568 195924  71696 S  12.5  1.2   1905:39 Xorg                                                                                                                                                                      
+27122 jih88     20   0   43380   4036   3192 R  12.5  0.0   0:00.03 top                                                                                                                                                                       
+ 3980 jih88     20   0  359604   8652   3224 S   6.2  0.1  51:52.56 ibus-daemon   
+ ...
+ ```
+ #### top information field
+`top` - 프로그램 이름
+`09:39:19` - 현재 시간 
+`up 23 days, 39 min` - uptime
+`1 user` - login한 user가 1명  
+`load average` - run을 기다리고 있는 preocess 의 개수. 처음은 마짐막 60초, 그 다음은 이전 5분, 마지막으로 이전 15분. 1.0보다 낮은 값은 mahchine이 busy하다는 것을 의미.
+`Tasks:` -  process 개수와 process 상태 출력
+`%Cpu(s):` - cpu 사용 정보 출력  
+`5.2 us,` - user process를 위해 사용되는 cpu percent  
+`1.1 sy,` - kernel을 위해 사용되는 cpu percent
+`0.0 ni,` - low-priority process percent
+`93.2 id,`  - idle cpu percent
+`0.4 wa,` - waiting for I/O cpu percent
+`Mem` - physical RAM 사용 정보
+`Swap:` - swap space 사용 정보
+## Controlling Processes
+`xlogo` - x window system logo 출력
+### interrupting a process
+`Ctrl+c` - interrupts a program
+
+### Putting Process in the Backgroud
+`&` - process를 background에서 실행
+``` bash
+xlogo &
+```
+ps로 실행중인 process 확인 가능
+``` bash
+jih88@jih88 ~ $ ps
+  PID TTY          TIME CMD
+ 2017 pts/0    00:00:00 xlogo
+ 3238 pts/0    00:00:00 ps
+24904 pts/0    00:00:00 bash
+```
+`jobs` - 실행중인 job 확인 가능
+``` bash
+jih88@jih88 ~ $ jobs
+[1]+  실행중               xlogo &
+```
+### Returning a Process to the Foreground
+`fg` - 실행 중인 backgrond process를 foreground로 위치시킴
+``` bash
+jih88@jih88 ~ $ jobs
+[1]+  실행중               xlogo &
+jih88@jih88 ~ $ fg %1
+xlogo
+^C
+```
+### Stopping(Pausing) a Process
+`Ctrl+z` - Foreground process를 stop 시킴.
+`bg` - Foreground process를 backgrond로 위치시킴.
+``` bash
+jih88@jih88 ~ $ xlogo
+^Z
+[1]+  정지됨               xlogo
+jih88@jih88 ~ $ bg %1
+[1]+ xlogo &
+```
+## Signals
+`kill` - 종료하고 싶은 프로그램들을 제거함.
+``` bash
+jih88@jih88 ~ $ xlogo &
+[1] 3643
+jih88@jih88 ~ $ kill 3643
+```
+kill command는 signal을 전송 
+`Ctrl+z`나 `Ctrl+c`와 같은 커맨드로 signal을 전송  
+`Ctrl+C` - INT(Interrupt)
+`Ctrl+Z` - TSTP(terminal stop)
+### Sending Signals to Processes with kill
+``` bash
+kill [-signal] PID ...
+```
+1(HUP) - Hanupup, reinit할 때 많이 쓰임  
+2(INT) - Interrupt, 프로그램 종료  
+9(KILL) - Kill, 프로그램이 직접 종료하지 않고, kernel이 종료시킴. 다른 termination signal이 안 먹힐 때 쓰는 것이 좋음.  
+15(TERM) - Terminate, kill command가 발생시키는 default 시그널. 프로그램이 signal을 받아서 종료시킴.  
+18(CONT) - Continue, TSTP 시그널에 의해 정지된 process를 run시킴.  
+19(STOP) - Stop, kernel에 의하여 process를 정지시킴.  
+20(TSTP)- Terminal Stop, 프로그램에 의해 process를 정지시킴.  
+``` bash
+jih88@jih88 ~ $ xlogo &
+[1] 6015
+jih88@jih88 ~ $ kill -1 6015
+jih88@jih88 ~ $ 
+[1]+  끊어짐               xlogo
+```
+``` bash
+jih88@jih88 ~ $ xlogo &
+[1] 6048
+jih88@jih88 ~ $ kill -INT 6048
+jih88@jih88 ~ $ 
+[1]+  인터럽트            xlogo
+jih88@jih88 ~ $ xlogo &
+[1] 6054
+jih88@jih88 ~ $ kill -SIGINT 6054
+jih88@jih88 ~ $ 
+[1]+  인터럽트            xlogo
+```
+#### other common signal
+3(QUIT) - Quit
+11(SEGV) - Segnmentation Violation
+28(WINCH) - Window Change
+``` bash
+jih88@jih88 ~ $ kill -11 6130
+jih88@jih88 ~ $ 
+[1]+  세그멘테이션 오류 (core dumped) xlogo
+jih88@jih88 ~ $ kill -3 6156
+jih88@jih88 ~ $ 
+[1]+  끝내기               (core dumped) xlogo
+```
+``` bash
+jih88@jih88 ~ $ kill -l
+ 1) SIGHUP	 2) SIGINT	 3) SIGQUIT	 4) SIGILL	 5) SIGTRAP
+ 6) SIGABRT	 7) SIGBUS	 8) SIGFPE	 9) SIGKILL	10) SIGUSR1
+11) SIGSEGV	12) SIGUSR2	13) SIGPIPE	14) SIGALRM	15) SIGTERM
+16) SIGSTKFLT	17) SIGCHLD	18) SIGCONT	19) SIGSTOP	20) SIGTSTP
+21) SIGTTIN	22) SIGTTOU	23) SIGURG	24) SIGXCPU	25) SIGXFSZ
+26) SIGVTALRM	27) SIGPROF	28) SIGWINCH	29) SIGIO	30) SIGPWR
+31) SIGSYS	34) SIGRTMIN	35) SIGRTMIN+1	36) SIGRTMIN+2	37) SIGRTMIN+3
+38) SIGRTMIN+4	39) SIGRTMIN+5	40) SIGRTMIN+6	41) SIGRTMIN+7	42) SIGRTMIN+8
+43) SIGRTMIN+9	44) SIGRTMIN+10	45) SIGRTMIN+11	46) SIGRTMIN+12	47) SIGRTMIN+13
+48) SIGRTMIN+14	49) SIGRTMIN+15	50) SIGRTMAX-14	51) SIGRTMAX-13	52) SIGRTMAX-12
+53) SIGRTMAX-11	54) SIGRTMAX-10	55) SIGRTMAX-9	56) SIGRTMAX-8	57) SIGRTMAX-7
+58) SIGRTMAX-6	59) SIGRTMAX-5	60) SIGRTMAX-4	61) SIGRTMAX-3	62) SIGRTMAX-2
+63) SIGRTMAX-1	64) SIGRTMAX	
+```
+### Sending Signals to Multiple Processes with killall
+``` bash
+killall [-u user] [-signal] name ...
+```
+``` bash
+jih88@jih88 ~/proj/mediatek/trunk $ xlogo &
+[1] 6341
+jih88@jih88 ~/proj/mediatek/trunk $ xlogo &
+[2] 6342
+jih88@jih88 ~/proj/mediatek/trunk $ killall xlogo
+[1]-  종료됨               xlogo
+[2]+  종료됨               xlogo
+```
+## Shutting Down the System
+`halt`, `poweroff`,`reboot`,`shutdown` -> reboot 혹은 종료 명령어
+ex)
+``` bash
+sudo reboot
+sudo shutdown -h now
+sudo shutdown -r now
+```
+## More Process-Related Commands
+`pstree` - process list를 tree 형태로 출력
+`vmstat` - resource 사용 상황을 출력, time delay 설정 가능
+``` bash
+jih88@jih88 ~ $ vmstat 1
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 0  0 668672 2565100 5541620 3912476    0    1    55    70    2    3  5  1 93  0  0
+ 0  0 668672 2565100 5541620 3912476    0    0     0     0  719 1212  1  1 98  0  0
+ 0  0 668672 2565100 5541620 3912476    0    0     0     0  682 1216  1  0 99  0  0
+ 2  0 668672 2564968 5541620 3912476    0    0     0     0  668 1135  1  0 98  0  0
+```
+`xload` - system load를 gui graph로 출력
+`tload` - system load를 tui graph로 출력

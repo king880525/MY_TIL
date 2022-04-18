@@ -1,0 +1,10 @@
+## 유저 생성
+`CREATE USER 'nodejs'@'%' IDENTIFIED BY '111111';`
+## 사용자 확인
+`SELECT Host,User FROM mysql.user;`
+## 권한 부여
+```
+GRANT ALL PRIVILLEGES ON opentutorials.* TO `nodejs`@`%`;
+```
+## 권한 적용
+`FLUSH PRIVILEGES;`

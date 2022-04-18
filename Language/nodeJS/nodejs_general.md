@@ -24,12 +24,12 @@ https://velog.io/@bathingape/JavaScript-var-let-const-%EC%B0%A8%EC%9D%B4%EC%A0%9
 `readFileSync` -> 동기식 파일 쓰는 메서드 
 
 ## URL 구조
-http://opentutorials.org;3000/main?id=HTML&page=12
-`http` -> 프로토콜
-`opentutorials.org` -> 도메인 네임
-`3000` -> 포트 번호
-`main` -> 경로, 해당 컴퓨터의 어떤 경로에서 파일을 가져올 것인지
-`?id=HTML&page=12` -> 쿼리스트링, 웹서버에 전달할 데이터
+http://opentutorials.org;3000/main?id=HTML&page=12  
+`http` -> 프로토콜  
+`opentutorials.org` -> 도메인 네임  
+`3000` -> 포트 번호  
+`main` -> 경로, 해당 컴퓨터의 어떤 경로에서 파일을 가져올 것인지  
+`?id=HTML&page=12` -> 쿼리스트링, 웹서버에 전달할 데이터  
 
 ## CRUD
 정보 시스템의 핵심 메커니즘  
@@ -47,9 +47,9 @@ https://poiemaweb.com/js-execution-context
 https://poiemaweb.com/js-closure
 
 ## vscode에서 node.js 메소드 사용 시, 취소선이 나타는 이유
-https://okky.kr/article/1153356
+https://okky.kr/article/1153356  
 deprecated 되서 취소선이 나타난다고 한다.  
-url.parse 함수의 deprecated 설명
+url.parse 함수의 deprecated 설명  
 ```
 function parse(urlString: string): url.UrlWithStringQuery (+3 overloads)
 The url.parse() method takes a URL string, parses it, and returns a URL object.

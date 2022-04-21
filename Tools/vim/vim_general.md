@@ -24,6 +24,10 @@ ex)
 `set nu` - 라인 넘버 표시  
 `set nu!` - 라인 넘버 미표시
 
+## 탭 문자, 개행 문자 표시
+`set list` - tab, 개행 문자 표시
+`set nolist` - tab, 개행 문자 미표시
+
 ## line control
 커서 끈 상태에서 J : 여러 줄을 한 줄로 합침.
 

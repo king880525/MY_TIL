@@ -11,6 +11,7 @@
   
 # 목차
 ## TIL
+### 2022년 3월
 [2022-03-07](/journal/2022-03-07.md)  
 [2022-03-08](/journal/2022-03-07.md)  
 [2022-03-11](/journal/2022-03-11.md)  
@@ -22,6 +23,7 @@
 [2022-03-26](/journal/2022-03-26.md)  
 [2022-03-28](/journal/2022-03-28.md)  
 [2022-03-29](/journal/2022-03-29.md)  
+### 2022년 4월
 [2022-04-04](/journal/2022-04-04.md)  
 [2022-04-05](/journal/2022-04-05.md)  
 [2022-04-06](/journal/2022-04-06.md)  
@@ -47,6 +49,7 @@
 [NodeJS 정리](/Language/nodeJS/nodejs_general.md)  
 ### Python 
 [Python 정리](/Language/python/python_general.md)  
+[python 기초 개념 정리](/Language/python/python_basic_jump.md)
 ## Linux
 [리눅스 일반 정리](/Linux/linux_general.md) 
 [리눅스 메뉴얼 책 학습](/Linux/linux_manual.md)  

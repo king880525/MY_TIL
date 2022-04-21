@@ -24,3 +24,7 @@ Jail list: sshd
 ### 3.  fail2ban 차단ip 해제하기
 `# [root@victor jail.d]# fail2ban-client set sshd unbanip 221.xxx.xxx.xxx`
 fail2ban을 재시작하지않아도 바로 접속이 가능해진다.
+
+# 링크
+bash shell script 강좌
+https://wikidocs.net/book/2370

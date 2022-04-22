@@ -3,6 +3,7 @@
 `Ctrl + Click`   -> click한 링크로 이동
 `Home` => 라인 맨 앞으로 이동
 `End` => 라인 맨 뒤로 이동
+`Ctrl+Enter` => 다음 줄로 입력 커서 이동
 
 # Windows10 vscode 내 터미널에서 PS1 실행 오류 출력되는 문제 수정 방법
 1. Windows PowerShell을 관리자 권한으로 실행

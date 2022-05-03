@@ -76,3 +76,19 @@ If true, the first token after the literal string // and preceding the next / wi
 url.d.ts(63, 8): 선언이 여기에 사용되지 않음으로 표시되었습니다.
 빠른 수정을 사용할 수 없음
 ```
+# Express에서 미들웨어의 실행 순서
+``` JavaScript
+app.get(`/user/:id`, function(req,res,next){
+    if(req.param.id == '0') next('route')
+    else next()
+}, function(req, res, next) {
+    res.send('regular')
+})
+
+app.get('/user/:id', function(res, req, next){
+    res.send('special')
+})
+```
+위와 같이 실행 될 때, 첫번째 콜백이 먼저 실행되고  
+ID가 0이면 다음 라우트의 콜백을 실행  
+ID가 0이 아니면 두번째 콜백이 실행된다.  

@@ -1,8 +1,8 @@
-<img src="attachments/foam-icon.png" width=100 align="left">
+<img src="attachments/foam-icon.png" width=100 align="left">  
 
 # JIH's TIL
 
-**Read me VER 0.4**
+**Read me VER 0.4**  
 # 작성 규칙
 - 매일 커밋한다.
 - daily로 먼저 작성하고, 작성한 항목들을 달에 한 번 카테고리화 한다.
@@ -11,35 +11,11 @@
   
 # 목차
 ## TIL
-[2022년 3월](/journal/2022-03.md)
-[2022년 4월](/journal/2022-04.md)
-[2022년 5월](/journal/2022-05.md)
-[2022년 6월](/journal/2022-06.md)
-[2022년 7월](/journal/2022-07.md)
-### 2022년 3월
-[2022-03-07](/journal/2022-03-07.md)  
-[2022-03-08](/journal/2022-03-07.md)  
-[2022-03-11](/journal/2022-03-11.md)  
-[2022-03-14](/journal/2022-03-14.md)  
-[2022-03-20](/journal/2022-03-20.md)  
-[2022-03-22](/journal/2022-03-22.md)  
-[2022-03-23](/journal/2022-03-23.md)  
-[2022-03-24](/journal/2022-03-24.md)  
-[2022-03-26](/journal/2022-03-26.md)  
-[2022-03-28](/journal/2022-03-28.md)  
-[2022-03-29](/journal/2022-03-29.md)  
-### 2022년 4월
-[2022-04-04](/journal/2022-04-04.md)  
-[2022-04-05](/journal/2022-04-05.md)  
-[2022-04-06](/journal/2022-04-06.md)  
-[2022-04-07](/journal/2022-04-07.md)  
-[2022-04-08](/journal/2022-04-08.md)  
-[2022-04-11](/journal/2022-04-11.md)  
-[2022-04-12](/journal/2022-04-12.md)  
-[2022-04-13](/journal/2022-04-13.md)  
-[2022-04-16](/journal/2022-04-16.md)  
-[2022-04-17](/journal/2022-04-17.md)  
-[2022-04-18](/journal/2022-04-18.md)  
+[2022년 3월](/journal/2022-03.md)  
+[2022년 4월](/journal/2022-04.md)  
+[2022년 5월](/journal/2022-05.md)  
+[2022년 6월](/journal/2022-06.md)  
+[2022년 7월](/journal/2022-07.md)  
 ## Company
 [회사 관련 정리](/company/company.md)  
 ## DB

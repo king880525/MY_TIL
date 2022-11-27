@@ -1,0 +1,159 @@
+{
+  "main": {
+    "id": "709d24668ac524a8",
+    "type": "split",
+    "children": [
+      {
+        "id": "d48fb1fb3074b3dd",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "968115ee5bb3c711",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Language/C/kerningham_c_lang/2장.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "5690b51fccefd216",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.0.3"
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "256eaea676ebf01e",
+    "type": "split",
+    "children": [
+      {
+        "id": "bf2513b1864ced75",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b6e9dbeaddfd7bb7",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "fedc83989140265b",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "8526d471a7910f13",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "53f341b49e73ccc8",
+    "type": "split",
+    "children": [
+      {
+        "id": "73eef1397712a74f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "64938c14d944441d",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Language/C/kerningham_c_lang/2장.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "faa69cec623e496f",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Language/C/kerningham_c_lang/2장.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "a78ac83cdb277315",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "767d65b9442cdbc0",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Language/C/kerningham_c_lang/2장.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "5690b51fccefd216",
+  "lastOpenFiles": [
+    "Language/C/kerningham_c_lang/1장.md",
+    "Language/C/kerningham_c_lang/2장.md",
+    "Language/C/kerningham_c_lang/general.md",
+    "Language/C/c_general.md",
+    "journal/2022-07-29.md",
+    "journal/2022-07.md"
+  ]
+}

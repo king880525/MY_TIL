@@ -1,0 +1,5 @@
+inet_aton
+inet_ntoa
+inet_pton
+inet_ntop
+inet_addr

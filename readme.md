@@ -11,11 +11,8 @@
   
 # 목차
 ## TIL
-[2022년 3월](/journal/2022-03.md)  
-[2022년 4월](/journal/2022-04.md)  
-[2022년 5월](/journal/2022-05.md)  
-[2022년 6월](/journal/2022-06.md)  
-[2022년 7월](/journal/2022-07.md)  
+[2023-01-31](/journal/2023-01-31.md)
+
 ## Company
 [회사 관련 정리](/company/company.md)  
 ## DB

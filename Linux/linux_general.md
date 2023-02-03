@@ -28,3 +28,25 @@ fail2ban을 재시작하지않아도 바로 접속이 가능해진다.
 # 링크
 bash shell script 강좌
 https://wikidocs.net/book/2370
+
+
+## 우분투에서 usb to serial 변환기 사용
+ - 우분투 7.10 을 사용하는 도중 usb to serial 을 사용하게 되었다.  
+ - 하지만 /dev/ttyUSB* 파일이 어디에도 없었던것.  
+ - brltty 패키지와 충돌이 있어서 그런것.  해당 패키지를 삭제하니 문제가 해결되었다.
+ - 링크
+http://pchero21.com/?tag=brltty
+
+## arp 정적 테이블 추가
+arp -s \[IP 주소]\[MAC 주소]
+
+## openwrt ubus
+https://openwrt.org/docs/techref/ubus
+
+커널 모듈이 사용중인 경우 
+ex)
+``` bash
+[rootSERVER ~]# rmmod -f cifs
+ERROR: Removing 'cifs': Resource temporarily unavailable
+```
+-> modprobe -r로 종속성 있는 모듈을 모두 해제하는 방법 시도 가능
